@@ -16,7 +16,7 @@ enum NetworkError: Error {
 	case networkError
 	case statusCodeError
 	case parseError
-	case elementNotFound
+	case notFound
 	
 	var describing: String {
 		switch self {
@@ -36,8 +36,8 @@ enum NetworkError: Error {
 			return "Ошибка получения кода статуса. Обратитесь к разработчику"
 		case .parseError:
 			return "Ошибка парсинга данных. Обратитесь к разработчику"
-		case .elementNotFound:
-			return "Элемент не найден на сервере"
+		case .notFound:
+			return "Неудачный запрос, не найдено на сервере"
 		}
 	}
 }

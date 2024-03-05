@@ -43,15 +43,38 @@ extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
 			completion: { [weak self] result in
 				switch result {
 				case .success(let serverModel):
-					let model = WeatherCityModel(
-						city: serverModel.city.name,
-						daysWeatherInfo: serverModel.list
+					let city = WeatherViewModel(
+						city: serverModel.city.name
 					)
 					
-					self?.view?.updateView(model)
+					var infoModels: [WeatherCellViewModel] = []
+					
+					serverModel.list.forEach { model in
+						if let description = model.weather.first?.description {
+							let infoModel = WeatherCellViewModel(
+								date: model.dtTxt,
+								temperature: "\(model.main.temp)",
+								description: description
+							)
+							
+							infoModels.append(infoModel)
+						} else {
+							let infoModel = WeatherCellViewModel(
+								date: model.dtTxt,
+								temperature: "\(model.main.temp)",
+								description: ""
+							)
+							
+							infoModels.append(infoModel)
+						}
+					}
+					
+					self?.view?.updateView(city)
+					self?.view?.display(models: infoModels)
 				case .failure(let error):
 					DTLogger.shared.log(.error, error.localizedDescription)
 				}
-			})
+			}
+		)
 	}
 }

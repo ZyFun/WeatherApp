@@ -9,20 +9,20 @@ import UIKit
 import DTLogger
 
 protocol IWeatherScreenDataSourceProvider {
-	var viewModels: [WeatherCityModel] { get set }
+	var viewModels: [WeatherCellViewModel] { get set }
 	func makeDataSource(with tableView: UITableView)
-	func updateDataSource(_ showComplete: Bool)
+	func updateDataSource()
 }
 
 final class WeatherScreenDataSourceProvider: NSObject, IWeatherScreenDataSourceProvider {
 	
 	// MARK: - Public properties
 	
-	var viewModels: [WeatherCityModel] = []
+	var viewModels: [WeatherCellViewModel] = []
 	
 	// MARK: - Private properties
 	
-	private var dataSource: UITableViewDiffableDataSource<Section, WeatherCityModel>?
+	private var dataSource: UITableViewDiffableDataSource<Section, WeatherCellViewModel>?
 }
 
 // MARK: - Table view data source
@@ -49,7 +49,11 @@ extension WeatherScreenDataSourceProvider {
 						return UITableViewCell()
 					}
 					
-					cell.config(day: model.daysWeatherInfo.first!.dtTxt, temperature: model.daysWeatherInfo.first!.main.temp)
+					cell.config(
+						day: model.date,
+						temperature: model.temperature,
+						description: model.description
+					)
 					
 					return cell
 				}
@@ -57,9 +61,11 @@ extension WeatherScreenDataSourceProvider {
 		)
 	}
 	
-	func updateDataSource(_ showComplete: Bool) {
-		var snapshot = NSDiffableDataSourceSnapshot<Section, WeatherCityModel>()
+	func updateDataSource() {
+		var snapshot = NSDiffableDataSourceSnapshot<Section, WeatherCellViewModel>()
 		snapshot.appendSections([.main])
 		snapshot.appendItems(viewModels, toSection: .main)
+		
+		dataSource?.apply(snapshot, animatingDifferences: true, completion: nil)
 	}
 }

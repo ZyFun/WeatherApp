@@ -20,9 +20,11 @@ final class WeatherScreenConfigurator {
 	) {
 		guard let view = view as? WeatherScreenViewController else { return }
 		let presenter = WeatherScreenPresenter(view: view)
+		let dataSourceProvider: IWeatherScreenDataSourceProvider = WeatherScreenDataSourceProvider()
 		let router = WeatherScreenRouter(withNavigationController: navigationController)
 		
 		view.presenter = presenter
+		view.dataSourceProvider = dataSourceProvider
 		presenter.view = view
 		presenter.router = router
 		

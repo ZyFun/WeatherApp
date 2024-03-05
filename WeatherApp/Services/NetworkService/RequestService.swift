@@ -69,7 +69,7 @@ final class RequestSender: IRequestSender {
 					result = .failure(.authError)
 					return
 				case 404:
-					result = .failure(.elementNotFound)
+					result = .failure(.notFound)
 					return
 				case 500...:
 					result = .failure(.serverUnavailable)

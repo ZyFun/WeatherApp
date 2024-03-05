@@ -10,8 +10,11 @@ import Foundation
 public struct URLProvider: IRequest {
 	var urlRequest: URLRequest?
 	
-	public static func fetchApiStringURL(with token: String, for city: String) -> String {
-		let urlString = "http://api.openweathermap.org/data/2.5/forecast?q=\(city),uk&APPID=\(token)&units=metric&lang=ru"
+	public static func fetchApiStringURL(
+		with token: String,
+		for city: String,
+		language: Language) -> String {
+		let urlString = "http://api.openweathermap.org/data/2.5/forecast?q=\(city),uk&APPID=\(token)&units=metric&lang=\(language)"
 		
 		return urlString
 	}

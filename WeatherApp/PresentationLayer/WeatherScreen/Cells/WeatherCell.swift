@@ -11,6 +11,15 @@ final class WeatherCell: UITableViewCell, IdentifiableCell {
 	
 	// MARK: - Private properties
 	
+	private let temperatureVStackView: UIStackView = {
+		let stackView = UIStackView()
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.axis = .vertical
+		stackView.distribution = .fill
+		stackView.spacing = 8
+		return stackView
+	}()
+	
 	private let temperatureHStackView: UIStackView = {
 		let stackView = UIStackView()
 		stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,14 +33,18 @@ final class WeatherCell: UITableViewCell, IdentifiableCell {
 	private let dayLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.numberOfLines = 3
 		return label
 	}()
 	
 	private let temperatureLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.isHidden = true
+		return label
+	}()
+	
+	private let descriptionLabel: UILabel = {
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
 	
@@ -41,8 +54,6 @@ final class WeatherCell: UITableViewCell, IdentifiableCell {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
 		setup()
-		addViews()
-		setupConstraints()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -56,6 +67,7 @@ final class WeatherCell: UITableViewCell, IdentifiableCell {
 		
 		dayLabel.text = ""
 		temperatureLabel.text = ""
+		descriptionLabel.text = ""
 	}
 }
 
@@ -64,10 +76,12 @@ final class WeatherCell: UITableViewCell, IdentifiableCell {
 extension WeatherCell {
 	func config(
 		day: String,
-		temperature: Double
+		temperature: String,
+		description: String
 	) {
 		dayLabel.text = day
-		temperatureLabel.text = "\(temperature)"
+		temperatureLabel.text = temperature
+		descriptionLabel.text = description
 	}
 }
 
@@ -75,18 +89,17 @@ extension WeatherCell {
 
 private extension WeatherCell {
 	func setup() {
-		setupUI()
-	}
-	
-	func setupUI() {
-		
+		addViews()
+		setupConstraints()
 	}
 	
 	func addViews() {
-		contentView.addSubview(temperatureHStackView)
-		
+		contentView.addSubview(temperatureVStackView)
+		temperatureVStackView.addArrangedSubview(temperatureHStackView)
 		temperatureHStackView.addArrangedSubview(dayLabel)
 		temperatureHStackView.addArrangedSubview(temperatureLabel)
+		
+		temperatureVStackView.addArrangedSubview(descriptionLabel)
 	}
 	
 	func setupConstraints() {
@@ -95,22 +108,22 @@ private extension WeatherCell {
 				greaterThanOrEqualToConstant: 56
 			),
 			
-			temperatureHStackView.centerYAnchor.constraint(
+			temperatureVStackView.centerYAnchor.constraint(
 				equalTo: contentView.centerYAnchor
 			),
-			temperatureHStackView.topAnchor.constraint(
+			temperatureVStackView.topAnchor.constraint(
 				greaterThanOrEqualTo: contentView.topAnchor,
 				constant: Constants.paddingContent
 			),
-			temperatureHStackView.leadingAnchor.constraint(
+			temperatureVStackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
 				constant: Constants.paddingContent
 			),
-			temperatureHStackView.trailingAnchor.constraint(
+			temperatureVStackView.trailingAnchor.constraint(
 				equalTo: contentView.trailingAnchor,
 				constant: -Constants.paddingContent
 			),
-			temperatureHStackView.bottomAnchor.constraint(
+			temperatureVStackView.bottomAnchor.constraint(
 				lessThanOrEqualTo: contentView.bottomAnchor,
 				constant: -Constants.paddingContent
 			)

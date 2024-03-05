@@ -33,13 +33,13 @@ final class NetworkManager {
 
 extension NetworkManager: INetworkManager {
 	func getWeatherFor(city: String, completion: @escaping (Result<APIWeatherResponse, NetworkError>) -> Void) {
-		let requestConfig = RequestFactory.WeatherDataRequest.weatherModelConfig(for: city)
+		let requestConfig = RequestFactory.WeatherDataRequest.weatherModelConfig(for: city, language: .ru)
 		
 		requestService.send(config: requestConfig) { result in
 			switch result {
 			case .success(let (model, _, _)):
 				guard let model else {
-					completion(.failure(.elementNotFound))
+					completion(.failure(.notFound))
 					return
 				}
 				completion(.success(model))
