@@ -29,13 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 private extension AppDelegate {
 	/// Создание и отображение стартового ViewController
 	func createAndShowStartVC() {
-		let mainVC = ViewController()
+		let mainVC = WeatherScreenViewController()
 		let navigationController = UINavigationController(rootViewController: mainVC)
 		
-//		PresentationAssembly().taskList.config(
-//			view: mainVC,
-//			navigationController: navigationController
-//		)
+		PresentationAssembly().weatherScreen.config(
+			view: mainVC,
+			navigationController: navigationController
+		)
 
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.rootViewController = navigationController

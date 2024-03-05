@@ -35,14 +35,16 @@ extension NetworkManager: INetworkManager {
 	func getWeatherFor(city: String, completion: @escaping (Result<APIWeatherResponse, NetworkError>) -> Void) {
 		let requestConfig = RequestFactory.WeatherDataRequest.weatherModelConfig(for: city)
 		
-		requestService.send(config: requestConfig) { [weak self] result in
+		requestService.send(config: requestConfig) { result in
 			switch result {
 			case .success(let (model, _, _)):
-				DispatchQueue.main.async {
-					print(model?.name ?? "lol")
+				guard let model else {
+					completion(.failure(.elementNotFound))
+					return
 				}
+				completion(.success(model))
 			case .failure(let error):
-				self?.logger.log(.error, error.localizedDescription)
+				completion(.failure(error))
 			}
 		}
 	}

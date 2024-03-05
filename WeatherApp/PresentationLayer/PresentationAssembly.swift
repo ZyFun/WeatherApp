@@ -15,4 +15,8 @@ final class PresentationAssembly {
 		requestService: service.requestService,
 		logger: service.logger
 	)
+	
+	lazy var weatherScreen: WeatherScreenConfigurator = {
+		return WeatherScreenConfigurator(networkManager: networkManager)
+	}()
 }
