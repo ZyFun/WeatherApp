@@ -13,6 +13,7 @@ protocol WeatherScreenPresentationLogic: AnyObject {
 	
 	func getWeatherForCity()
 	func openCityScreen()
+	func setLanguage(_ language: Language)
 }
 
 final class WeatherScreenPresenter {
@@ -39,6 +40,11 @@ final class WeatherScreenPresenter {
 // MARK: - Presentation Logic
 
 extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
+	func setLanguage(_ language: Language) {
+		userDefaultsService?.saveLanguage(language)
+		getWeatherForCity()
+	}
+	
 	func openCityScreen() {
 		router?.routeTo(target: .cityListScreen)
 	}

@@ -42,6 +42,30 @@ final class WeatherScreenViewController: UIViewController {
 		return button
 	}()
 	
+	private lazy var changeLanguageMenu: UIMenu = {
+		let enAction = UIAction(title: "en") { _ in
+			self.presenter?.setLanguage(.en)
+		}
+		
+		let ruAction = UIAction(title: "ru") { _ in
+			self.presenter?.setLanguage(.ru)
+		}
+		
+		let menu = UIMenu(title: "Выбор языка", children: [enAction, ruAction])
+		
+		return menu
+	}()
+	
+	private lazy var changeLanguageBarButton: UIBarButtonItem = {
+		let button = UIBarButtonItem(
+			image: UIImage(systemName: "globe")
+		)
+		
+		button.menu = changeLanguageMenu
+		
+		return button
+	}()
+	
 	// MARK: - Life Cycle
 	
 	override func loadView() {
@@ -93,6 +117,7 @@ private extension WeatherScreenViewController {
 	
 	func setupNavBar() {
 		navigationItem.rightBarButtonItem = openCityScreenBarButton
+		navigationItem.leftBarButtonItem = changeLanguageBarButton
 	}
 	
 	func setupTableView() {
