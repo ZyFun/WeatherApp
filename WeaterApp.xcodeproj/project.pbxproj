@@ -33,6 +33,9 @@
 		2C8908512B97731A0070C749 /* IdentifiableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908502B97731A0070C749 /* IdentifiableCell.swift */; };
 		2C8908532B9781C80070C749 /* WeatherCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908522B9781C80070C749 /* WeatherCellViewModel.swift */; };
 		2C8908552B978D980070C749 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908542B978D980070C749 /* Language.swift */; };
+		2C8908582B9820D40070C749 /* CityListScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908572B9820D40070C749 /* CityListScreenViewController.swift */; };
+		2C89085A2B98210E0070C749 /* CityListScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908592B98210E0070C749 /* CityListScreenPresenter.swift */; };
+		2C89085C2B9821580070C749 /* CityListScreenConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C89085B2B9821580070C749 /* CityListScreenConfigurator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,9 @@
 		2C8908502B97731A0070C749 /* IdentifiableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableCell.swift; sourceTree = "<group>"; };
 		2C8908522B9781C80070C749 /* WeatherCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellViewModel.swift; sourceTree = "<group>"; };
 		2C8908542B978D980070C749 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		2C8908572B9820D40070C749 /* CityListScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListScreenViewController.swift; sourceTree = "<group>"; };
+		2C8908592B98210E0070C749 /* CityListScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListScreenPresenter.swift; sourceTree = "<group>"; };
+		2C89085B2B9821580070C749 /* CityListScreenConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListScreenConfigurator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +138,7 @@
 			children = (
 				2C8908382B9743540070C749 /* PresentationAssembly.swift */,
 				2C8908132B9715CE0070C749 /* WeatherScreen */,
+				2C8908562B98209D0070C749 /* CityListScreen */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -240,6 +247,32 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		2C8908562B98209D0070C749 /* CityListScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2C89085D2B98281A0070C749 /* Cells */,
+				2C89085E2B9828230070C749 /* Providers */,
+				2C8908572B9820D40070C749 /* CityListScreenViewController.swift */,
+				2C8908592B98210E0070C749 /* CityListScreenPresenter.swift */,
+				2C89085B2B9821580070C749 /* CityListScreenConfigurator.swift */,
+			);
+			path = CityListScreen;
+			sourceTree = "<group>";
+		};
+		2C89085D2B98281A0070C749 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		2C89085E2B9828230070C749 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -321,6 +354,8 @@
 				2C8908452B9748D20070C749 /* WeatherScreenRouter.swift in Sources */,
 				2C8908352B97284B0070C749 /* URLProvider.swift in Sources */,
 				2C8908532B9781C80070C749 /* WeatherCellViewModel.swift in Sources */,
+				2C89085A2B98210E0070C749 /* CityListScreenPresenter.swift in Sources */,
+				2C8908582B9820D40070C749 /* CityListScreenViewController.swift in Sources */,
 				2C89083F2B9748300070C749 /* WeatherScreenViewController.swift in Sources */,
 				2C8908332B9728040070C749 /* TokenProvider.swift in Sources */,
 				2C8908282B9724700070C749 /* RequestService.swift in Sources */,
@@ -334,6 +369,7 @@
 				2C89083C2B97441D0070C749 /* NetworkManager.swift in Sources */,
 				2C8908372B9743200070C749 /* ServiceAssembly.swift in Sources */,
 				2C8908512B97731A0070C749 /* IdentifiableCell.swift in Sources */,
+				2C89085C2B9821580070C749 /* CityListScreenConfigurator.swift in Sources */,
 				2C8908022B9711450070C749 /* WeatherApp.xcdatamodeld in Sources */,
 				2C89081B2B971D1A0070C749 /* NetworkError.swift in Sources */,
 				2C8908412B9748810070C749 /* WeatherScreenPresenter.swift in Sources */,

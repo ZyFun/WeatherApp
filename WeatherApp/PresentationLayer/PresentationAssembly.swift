@@ -19,4 +19,8 @@ final class PresentationAssembly {
 	lazy var weatherScreen: WeatherScreenConfigurator = {
 		return WeatherScreenConfigurator(networkManager: networkManager)
 	}()
+	
+	lazy var cityListScreen: CityListScreenConfigurator = {
+		return CityListScreenConfigurator()
+	}()
 }

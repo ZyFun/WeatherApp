@@ -20,22 +20,21 @@ final class WeatherScreenRouter: WeatherScreenRoutingLogic {
 	}
 	
 	enum Targets {
-//		case <# targetModule #>
+		case cityListScreen
 	}
 	
 	func routeTo(target: WeatherScreenRouter.Targets) {
-//		switch target {
-//		case <# targetModule #>:
-//			let <# targetModule #>VC = <#moduleName#>ViewController()
-//			
-//			// Configure MVP
-//			PresentationAssembly().<#moduleName#>.config(
-//				view: medicineVC,
-//				navigationController: navigationController
-//			)
-//			
-//			// Navigation
-//			navigationController?.pushViewController(<# targetModule #>VC, animated: true)
-//		}
+		switch target {
+		case .cityListScreen:
+			let cityListScreenVC = CityListScreenViewController()
+			
+			// Configure MVP
+			PresentationAssembly().cityListScreen.config(
+				view: cityListScreenVC
+			)
+			
+			// Navigation
+			navigationController.pushViewController(cityListScreenVC, animated: true)
+		}
 	}
 }

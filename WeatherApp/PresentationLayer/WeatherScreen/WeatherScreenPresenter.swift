@@ -12,6 +12,7 @@ protocol WeatherScreenPresentationLogic: AnyObject {
 	init(view: WeatherScreenView)
 	
 	func getWeatherForCity()
+	func openCityScreen()
 }
 
 final class WeatherScreenPresenter {
@@ -37,6 +38,10 @@ final class WeatherScreenPresenter {
 // MARK: - Presentation Logic
 
 extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
+	func openCityScreen() {
+		router?.routeTo(target: .cityListScreen)
+	}
+	
 	func getWeatherForCity() {
 		networkManager?.getWeatherFor(
 			city: "Москва,RU",

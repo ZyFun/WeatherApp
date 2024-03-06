@@ -29,6 +29,18 @@ final class WeatherScreenViewController: UIViewController {
 		return tableView
 	}()
 	
+	private lazy var openCityScreenBarButton: UIBarButtonItem = {
+		let action = UIAction { [weak self] _ in
+			self?.presenter?.openCityScreen()
+		}
+		
+		let button = UIBarButtonItem(
+			image: UIImage(systemName: "globe.americas.fill"),
+			primaryAction: action
+		)
+		
+		return button
+	}()
 	
 	// MARK: - Life Cycle
 	
@@ -71,7 +83,12 @@ extension WeatherScreenViewController: WeatherScreenView {
 
 private extension WeatherScreenViewController {
 	func setup() {
+		setupNavBar()
 		setupTableView()
+	}
+	
+	func setupNavBar() {
+		navigationItem.rightBarButtonItem = openCityScreenBarButton
 	}
 	
 	func setupTableView() {
