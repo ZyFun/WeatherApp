@@ -44,7 +44,8 @@ extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
 	
 	func getWeatherForCity() {
 		networkManager?.getWeatherFor(
-			city: "Москва,RU",
+			city: "шатура",
+			language: .ru,
 			completion: { [weak self] result in
 				switch result {
 				case .success(let serverModel):

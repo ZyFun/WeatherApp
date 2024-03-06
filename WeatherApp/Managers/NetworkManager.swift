@@ -9,7 +9,11 @@ import Foundation
 import DTLogger
 
 protocol INetworkManager {
-	func getWeatherFor(city: String, completion: @escaping (Result<APIWeatherResponse, NetworkError>) -> Void)
+	func getWeatherFor(
+		city: String,
+		language: Language,
+		completion: @escaping (Result<APIWeatherResponse, NetworkError>) -> Void
+	)
 }
 
 final class NetworkManager {
@@ -32,8 +36,12 @@ final class NetworkManager {
 // MARK: - INetworkManager
 
 extension NetworkManager: INetworkManager {
-	func getWeatherFor(city: String, completion: @escaping (Result<APIWeatherResponse, NetworkError>) -> Void) {
-		let requestConfig = RequestFactory.WeatherDataRequest.weatherModelConfig(for: city, language: .ru)
+	func getWeatherFor(
+		city: String,
+		language: Language,
+		completion: @escaping (Result<APIWeatherResponse, NetworkError>) -> Void
+	) {
+		let requestConfig = RequestFactory.WeatherDataRequest.weatherModelConfig(for: city, language: language)
 		
 		requestService.send(config: requestConfig) { result in
 			switch result {
