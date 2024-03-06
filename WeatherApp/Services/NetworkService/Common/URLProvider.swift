@@ -7,9 +7,7 @@
 
 import Foundation
 
-public struct URLProvider: IRequest {
-	var urlRequest: URLRequest?
-	
+public struct URLProvider {
 	public static func fetchApiStringURL(
 		with token: String,
 		for city: String,
