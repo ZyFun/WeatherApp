@@ -18,6 +18,11 @@ final class CityListScreenViewController: UIViewController {
 	
 	var presenter: CityListScreenPresenter?
 	
+	// MARK: - Dependency properties
+	
+	var dataSourceProvider: ICityListScreenDataSourceProvider?
+	var fetchedResultManager: ICitiesFetchedResultsManager?
+	
 	// MARK: - Private property
 	
 	// MARK: - UIElements
@@ -30,7 +35,7 @@ final class CityListScreenViewController: UIViewController {
 	
 	private lazy var addCityBarButton: UIBarButtonItem = {
 		let action = UIAction { [weak self] _ in
-			self?.presenter?.addCity()
+			self?.presenter?.openAlertAddCity()
 		}
 		
 		let button = UIBarButtonItem(systemItem: .add, primaryAction: action)
@@ -71,7 +76,7 @@ extension CityListScreenViewController: CityListScreenView {
 		) { [weak self] _ in
 			guard let cityName = alert.textFields?.first?.text else { return }
 			guard !cityName.isEmpty else { return }
-//			self?.presenter.addNewCity(cityName)
+			self?.presenter?.addNewCity(cityName)
 		}
 		
 		let cancelButton = UIAlertAction(title: "Отмена", style: .cancel)
@@ -91,9 +96,24 @@ extension CityListScreenViewController: CityListScreenView {
 private extension CityListScreenViewController {
 	func setup() {
 		setupNavBar()
+		setupTableView()
 	}
 	
 	func setupNavBar() {
 		navigationItem.rightBarButtonItem = addCityBarButton
+	}
+	
+	func setupTableView() {
+		tableView.delegate = dataSourceProvider
+		tableView.dataSource = dataSourceProvider
+		fetchedResultManager?.tableView = tableView
+		registerElements()
+	}
+	
+	func registerElements() {
+		tableView.register(
+			CityCell.self,
+			forCellReuseIdentifier: CityCell.identifier
+		)
 	}
 }

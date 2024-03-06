@@ -21,6 +21,9 @@ final class PresentationAssembly {
 	}()
 	
 	lazy var cityListScreen: CityListScreenConfigurator = {
-		return CityListScreenConfigurator()
+		return CityListScreenConfigurator(
+			coreDataService: service.coreDataService,
+			logger: service.logger
+		)
 	}()
 }

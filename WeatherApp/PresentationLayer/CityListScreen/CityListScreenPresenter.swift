@@ -6,11 +6,14 @@
 //
 
 import Foundation
+import DTLogger
 
 protocol CityListScreenPresentationLogic: AnyObject {
 	init(view: CityListScreenView)
 	
-	func addCity()
+	func openAlertAddCity()
+	func addNewCity(_ cityName: String)
+	func deleteCity(_ cityName: String)
 }
 
 final class CityListScreenPresenter {
@@ -19,6 +22,11 @@ final class CityListScreenPresenter {
 	weak var view: CityListScreenView?
 	
 	// MARK: - Private properties
+	
+	// MARK: - Dependency properties
+	
+	var logger: DTLogger?
+	var coreDataService: ICoreDataStorageService?
 	
 	// MARK: - Initializer
 	
@@ -30,7 +38,41 @@ final class CityListScreenPresenter {
 // MARK: - Presentation Logic
 
 extension CityListScreenPresenter: CityListScreenPresentationLogic {
-	func addCity() {
+	func openAlertAddCity() {
 		view?.showAlertAddCity()
+	}
+	
+	func addNewCity(_ cityName: String) {
+		let cityModel = CityModel(name: cityName)
+		
+		coreDataService?.performSave { [weak self] context in
+			self?.coreDataService?.save(cityModel, context: context)
+		} completion: { [weak self] result in
+			switch result {
+			case .success():
+				// обновление таблицы работает автоматически, поэтому пока не требуется
+				break
+			case .failure(let error):
+				self?.logger?.log(.error, error.localizedDescription)
+			}
+		}
+	}
+	
+	func deleteCity(_ cityName: String) {
+		coreDataService?.performSave({ [weak self] context in
+			do {
+				try self?.coreDataService?.deleteObject(withName: cityName, context: context)
+			} catch {
+				self?.logger?.log(.error, error.localizedDescription)
+			}
+		}, completion: { [weak self] result in
+			switch result {
+			case .success():
+				// Пока не требуется, так как обновление происходит автоматически
+				break
+			case .failure(let error):
+				self?.logger?.log(.error, error.localizedDescription)
+			}
+		})
 	}
 }
