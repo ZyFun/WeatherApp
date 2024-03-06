@@ -30,7 +30,8 @@ final class WeatherScreenRouter: WeatherScreenRoutingLogic {
 			
 			// Configure MVP
 			PresentationAssembly().cityListScreen.config(
-				view: cityListScreenVC
+				view: cityListScreenVC,
+				navigationController: navigationController
 			)
 			
 			// Navigation

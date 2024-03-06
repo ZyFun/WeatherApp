@@ -23,10 +23,11 @@ final class WeatherScreenPresenter {
 	
 	// MARK: - Dependency properties
 	
+	var networkManager: INetworkManager?
+	var userDefaultsService: IUserDefaultsStorageService?
+	
 	
 	// MARK: - Private properties
-	
-	var networkManager: INetworkManager?
 	
 	// MARK: - Initializer
 	
@@ -43,9 +44,13 @@ extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
 	}
 	
 	func getWeatherForCity() {
+		guard let userDefaultsService else {
+			return assertionFailure("Не инициализирован UserDefaults")
+		}
+		
 		networkManager?.getWeatherFor(
-			city: "шатура",
-			language: .ru,
+			city: userDefaultsService.loadCity(),
+			language: userDefaultsService.loadLanguage(),
 			completion: { [weak self] result in
 				switch result {
 				case .success(let serverModel):

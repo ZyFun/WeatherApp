@@ -9,9 +9,14 @@ import UIKit
 
 final class WeatherScreenConfigurator {
 	private let networkManager: INetworkManager
+	private let userDefaultsService: IUserDefaultsStorageService
 	
-	init(networkManager: INetworkManager) {
+	init(
+		networkManager: INetworkManager,
+		userDefaultsService: IUserDefaultsStorageService
+	) {
 		self.networkManager = networkManager
+		self.userDefaultsService = userDefaultsService
 	}
 	
 	func config(
@@ -29,5 +34,6 @@ final class WeatherScreenConfigurator {
 		presenter.router = router
 		
 		presenter.networkManager = networkManager
+		presenter.userDefaultsService = userDefaultsService
 	}
 }

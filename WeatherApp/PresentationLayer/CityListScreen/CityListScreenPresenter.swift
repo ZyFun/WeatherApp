@@ -14,12 +14,16 @@ protocol CityListScreenPresentationLogic: AnyObject {
 	func openAlertAddCity()
 	func addNewCity(_ cityName: String)
 	func deleteCity(_ cityName: String)
+	
+	func setCurrentCity(cityName: String)
+	func closeScreen()
 }
 
 final class CityListScreenPresenter {
 	// MARK: - Public Properties
 	
 	weak var view: CityListScreenView?
+	var router: CityListScreenRouter?
 	
 	// MARK: - Private properties
 	
@@ -27,6 +31,7 @@ final class CityListScreenPresenter {
 	
 	var logger: DTLogger?
 	var coreDataService: ICoreDataStorageService?
+	var userDefaultsService: IUserDefaultsStorageService?
 	
 	// MARK: - Initializer
 	
@@ -38,8 +43,16 @@ final class CityListScreenPresenter {
 // MARK: - Presentation Logic
 
 extension CityListScreenPresenter: CityListScreenPresentationLogic {
+	func closeScreen() {
+		router?.routeTo(target: .closeScreen)
+	}
+	
 	func openAlertAddCity() {
 		view?.showAlertAddCity()
+	}
+	
+	func setCurrentCity(cityName: String) {
+		userDefaultsService?.saveCity(cityName)
 	}
 	
 	func addNewCity(_ cityName: String) {

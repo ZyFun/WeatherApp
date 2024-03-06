@@ -54,6 +54,10 @@ final class WeatherScreenViewController: UIViewController {
 		super.viewDidLoad()
 		
 		setup()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		
 		presenter?.getWeatherForCity()
 	}

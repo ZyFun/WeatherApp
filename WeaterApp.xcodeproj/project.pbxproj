@@ -41,6 +41,8 @@
 		2C8908682B985F330070C749 /* CitiesFetchedResultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908672B985F330070C749 /* CitiesFetchedResultsManager.swift */; };
 		2C89086A2B985FED0070C749 /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908692B985FED0070C749 /* CityCell.swift */; };
 		2C89086D2B98817F0070C749 /* CityListScreenDataSourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C89086C2B98817F0070C749 /* CityListScreenDataSourceProvider.swift */; };
+		2C89086F2B9897360070C749 /* UserDefaultStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C89086E2B9897360070C749 /* UserDefaultStorageService.swift */; };
+		2C8908712B98A1B50070C749 /* CityListScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8908702B98A1B40070C749 /* CityListScreenRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,8 @@
 		2C8908672B985F330070C749 /* CitiesFetchedResultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesFetchedResultsManager.swift; sourceTree = "<group>"; };
 		2C8908692B985FED0070C749 /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCell.swift; sourceTree = "<group>"; };
 		2C89086C2B98817F0070C749 /* CityListScreenDataSourceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListScreenDataSourceProvider.swift; sourceTree = "<group>"; };
+		2C89086E2B9897360070C749 /* UserDefaultStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorageService.swift; sourceTree = "<group>"; };
+		2C8908702B98A1B40070C749 /* CityListScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListScreenRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +270,7 @@
 				2C8908572B9820D40070C749 /* CityListScreenViewController.swift */,
 				2C8908592B98210E0070C749 /* CityListScreenPresenter.swift */,
 				2C89085B2B9821580070C749 /* CityListScreenConfigurator.swift */,
+				2C8908702B98A1B40070C749 /* CityListScreenRouter.swift */,
 			);
 			path = CityListScreen;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				2C8908622B984CD10070C749 /* CoreData */,
+				2C89086E2B9897360070C749 /* UserDefaultStorageService.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 				2C89084B2B976F980070C749 /* WeatherScreenDataSourceProvider.swift in Sources */,
 				2C89086A2B985FED0070C749 /* CityCell.swift in Sources */,
 				2C8908452B9748D20070C749 /* WeatherScreenRouter.swift in Sources */,
+				2C89086F2B9897360070C749 /* UserDefaultStorageService.swift in Sources */,
 				2C8908352B97284B0070C749 /* URLProvider.swift in Sources */,
 				2C8908532B9781C80070C749 /* WeatherCellViewModel.swift in Sources */,
 				2C89085A2B98210E0070C749 /* CityListScreenPresenter.swift in Sources */,
@@ -423,6 +430,7 @@
 				2C8908022B9711450070C749 /* WeatherApp.xcdatamodeld in Sources */,
 				2C8908682B985F330070C749 /* CitiesFetchedResultsManager.swift in Sources */,
 				2C8908612B984CA70070C749 /* CoreDataStorageService.swift in Sources */,
+				2C8908712B98A1B50070C749 /* CityListScreenRouter.swift in Sources */,
 				2C89081B2B971D1A0070C749 /* NetworkError.swift in Sources */,
 				2C8908412B9748810070C749 /* WeatherScreenPresenter.swift in Sources */,
 				2C8908552B978D980070C749 /* Language.swift in Sources */,

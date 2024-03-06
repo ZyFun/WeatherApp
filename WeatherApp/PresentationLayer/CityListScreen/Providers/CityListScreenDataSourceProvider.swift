@@ -90,6 +90,15 @@ extension CityListScreenDataSourceProvider: UITableViewDataSource {
 
 extension CityListScreenDataSourceProvider: UITableViewDelegate {
 	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		
+		guard let cityName = fetchCity(at: indexPath)?.name else { return }
+		
+		presenter?.setCurrentCity(cityName: cityName)
+		presenter?.closeScreen()
+	}
+	
 	func tableView(
 		_ tableView: UITableView,
 		trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath

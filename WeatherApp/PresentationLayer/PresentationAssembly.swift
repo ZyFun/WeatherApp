@@ -17,11 +17,14 @@ final class PresentationAssembly {
 	)
 	
 	lazy var weatherScreen: WeatherScreenConfigurator = {
-		return WeatherScreenConfigurator(networkManager: networkManager)
+		return WeatherScreenConfigurator(
+			networkManager: networkManager,
+			userDefaultsService: service.userDefaultsService)
 	}()
 	
 	lazy var cityListScreen: CityListScreenConfigurator = {
 		return CityListScreenConfigurator(
+			userDefaultsService: service.userDefaultsService,
 			coreDataService: service.coreDataService,
 			logger: service.logger
 		)

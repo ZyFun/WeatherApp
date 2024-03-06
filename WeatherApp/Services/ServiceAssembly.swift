@@ -14,11 +14,14 @@ final class ServiceAssembly {
 	}()
 	
 	lazy var requestService: IRequestSender = {
-		var requestService = RequestSender()
-		return requestService
+		return RequestSender()
 	}()
 	
 	lazy var coreDataService: ICoreDataStorageService = {
 		return CoreDataStorageService.shared
+	}()
+	
+	lazy var userDefaultsService: IUserDefaultsStorageService = {
+		return UserDefaultsStorageService()
 	}()
 }
