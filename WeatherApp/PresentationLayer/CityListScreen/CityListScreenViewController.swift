@@ -9,7 +9,7 @@ import UIKit
 import DTLogger
 
 protocol CityListScreenView: AnyObject {
-	
+	func showAlertAddCity()
 }
 
 final class CityListScreenViewController: UIViewController {
@@ -30,7 +30,7 @@ final class CityListScreenViewController: UIViewController {
 	
 	private lazy var addCityBarButton: UIBarButtonItem = {
 		let action = UIAction { [weak self] _ in
-			DTLogger.shared.log(.debug, "skidysh")
+			self?.presenter?.addCity()
 		}
 		
 		let button = UIBarButtonItem(systemItem: .add, primaryAction: action)
@@ -58,7 +58,32 @@ final class CityListScreenViewController: UIViewController {
 // MARK: - Implementing delegate methods
 
 extension CityListScreenViewController: CityListScreenView {
-	
+	func showAlertAddCity() {
+		let alert = UIAlertController(
+			title: "Новый город",
+			message: "Введите название города России",
+			preferredStyle: .alert
+		)
+		
+		let addButton = UIAlertAction(
+			title: "Добавить",
+			style: .default
+		) { [weak self] _ in
+			guard let cityName = alert.textFields?.first?.text else { return }
+			guard !cityName.isEmpty else { return }
+//			self?.presenter.addNewCity(cityName)
+		}
+		
+		let cancelButton = UIAlertAction(title: "Отмена", style: .cancel)
+		
+		alert.addAction(addButton)
+		alert.addAction(cancelButton)
+		alert.addTextField { textField in
+			textField.placeholder = "Шатура"
+		}
+		
+		present(alert, animated: true)
+	}
 }
 
 // MARK: - Setup View

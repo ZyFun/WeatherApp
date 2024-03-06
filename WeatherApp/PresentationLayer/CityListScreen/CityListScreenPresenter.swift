@@ -9,6 +9,8 @@ import Foundation
 
 protocol CityListScreenPresentationLogic: AnyObject {
 	init(view: CityListScreenView)
+	
+	func addCity()
 }
 
 final class CityListScreenPresenter {
@@ -28,5 +30,7 @@ final class CityListScreenPresenter {
 // MARK: - Presentation Logic
 
 extension CityListScreenPresenter: CityListScreenPresentationLogic {
-	
+	func addCity() {
+		view?.showAlertAddCity()
+	}
 }
