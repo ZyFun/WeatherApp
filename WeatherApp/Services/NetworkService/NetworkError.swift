@@ -9,7 +9,6 @@ import Foundation
 
 enum NetworkError: Error {
 	case authError
-	case messageError(String)
 	case serverUnavailable
 	case unownedError
 	case invalidURL
@@ -17,13 +16,14 @@ enum NetworkError: Error {
 	case statusCodeError
 	case parseError
 	case notFound
+	case messageError(String, Int? = nil)
 	
 	var describing: String {
 		switch self {
 		case .authError:
 			return "ошибка авторизации"
-		case .messageError(let message):
-			return message
+		case .messageError(let message, let statusCode):
+			return "\(message): \(statusCode ?? 0)"
 		case .serverUnavailable:
 			return "все упало"
 		case .unownedError:

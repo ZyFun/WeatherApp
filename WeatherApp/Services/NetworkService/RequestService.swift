@@ -17,6 +17,10 @@ protocol IRequestSender {
 		config: RequestConfig<Parser>,
 		completionHandler: @escaping (Result<(Parser.Model?, Data?, URLResponse?), NetworkError>) -> Void
 	)
+	
+	func sendAsync<Parser>(
+		config: RequestConfig<Parser>
+	) async throws -> (Parser.Model?, Data?, URLResponse?) where Parser: IParser
 }
 
 struct RequestConfig<Parser> where Parser: IParser {
@@ -60,32 +64,16 @@ final class RequestSender: IRequestSender {
 			if !(200..<300).contains(statusCode) {
 				DTLogger.shared.log(.info, "Status code: \(statusCode.description)")
 				
-				switch statusCode {
-				case 400:
-					let serverMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
-					result = .failure(.messageError(serverMessage))
-					return
-				case 401:
-					result = .failure(.authError)
-					return
-				case 404:
-					result = .failure(.notFound)
-					return
-				case 500...:
-					result = .failure(.serverUnavailable)
-					return
-				default:
-					DTLogger.shared.log(.error, statusCode.description)
-					let serverMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
-					result = .failure(.messageError(serverMessage))
-					return
-				}
+				let serverMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
+				result = .failure(.messageError(serverMessage, statusCode))
+				return
 			}
 			
-			// Для отладки и сверки данных
+			#if DEBUG
 			if let data = data, let jsonString = String(data: data, encoding: .utf8) {
 				DTLogger.shared.log(.info, "Response JSON: \(jsonString)")
 			}
+			#endif
 			
 			if let data = data,
 			   let parseModel: Parser.Model = config.parser?.parse(data: data) {
@@ -98,5 +86,40 @@ final class RequestSender: IRequestSender {
 			}
 		}
 		task.resume()
+	}
+	
+	func sendAsync<Parser>(
+		config: RequestConfig<Parser>
+	) async throws -> (Parser.Model?, Data?, URLResponse?) where Parser: IParser {
+		
+		guard let urlRequest = config.request.urlRequest else {
+			throw NetworkError.invalidURL
+		}
+		
+		let (data, response) = try await URLSession.shared.data(for: urlRequest)
+		
+		guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+			DTLogger.shared.log(.error, "Ошибка получения кода статуса")
+			throw NetworkError.statusCodeError
+		}
+		
+		if !(200..<300).contains(statusCode) {
+			DTLogger.shared.log(.info, "Status code: \(statusCode.description)")
+			
+			let serverMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
+			throw NetworkError.messageError(serverMessage, statusCode)
+		}
+		
+		#if DEBUG
+		if let jsonString = String(data: data, encoding: .utf8) {
+			DTLogger.shared.log(.info, "Response JSON: \(jsonString)")
+		}
+		#endif
+		
+		if let parseModel: Parser.Model = config.parser?.parse(data: data) {
+			return (parseModel, nil, nil)
+		} else {
+			throw NetworkError.parseError
+		}
 	}
 }

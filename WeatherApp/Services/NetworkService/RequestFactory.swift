@@ -10,7 +10,6 @@ import DTLogger
 
 struct RequestFactory {
 	struct WeatherDataRequest {
-		
 		static func weatherModelConfig(for city: String, language: Language) -> RequestConfig<JSONParser<APIWeatherResponse>> {
 			let token = TokenProvider.tokenAPI
 			let urlRequest = URLProvider.fetchApiStringURL(with: token, for: city, language: language)

@@ -14,6 +14,11 @@ protocol INetworkManager {
 		language: Language,
 		completion: @escaping (Result<APIWeatherResponse, NetworkError>) -> Void
 	)
+	
+	func getWeatherFor(
+		city: String,
+		language: Language
+	) async throws -> APIWeatherResponse
 }
 
 final class NetworkManager {
@@ -55,5 +60,15 @@ extension NetworkManager: INetworkManager {
 				completion(.failure(error))
 			}
 		}
+	}
+	
+	func getWeatherFor(
+		city: String,
+		language: Language
+	) async throws -> APIWeatherResponse {
+		let requestConfig = RequestFactory.WeatherDataRequest.weatherModelConfig(for: city, language: language)
+		let (model, _, _) = try await requestService.sendAsync(config: requestConfig)
+		guard let model else { throw NetworkError.parseError }
+		return model
 	}
 }

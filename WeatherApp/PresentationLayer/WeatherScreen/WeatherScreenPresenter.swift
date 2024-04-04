@@ -24,8 +24,8 @@ final class WeatherScreenPresenter {
 	
 	// MARK: - Dependency properties
 	
-	var networkManager: INetworkManager?
-	var userDefaultsService: IUserDefaultsStorageService?
+	var networkManager: INetworkManager!
+	var userDefaultsService: IUserDefaultsStorageService!
 	
 	
 	// MARK: - Private properties
@@ -41,7 +41,7 @@ final class WeatherScreenPresenter {
 
 extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
 	func setLanguage(_ language: Language) {
-		userDefaultsService?.saveLanguage(language)
+		userDefaultsService.saveLanguage(language)
 		getWeatherForCity()
 	}
 	
@@ -49,7 +49,7 @@ extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
 		router?.routeTo(target: .cityListScreen)
 	}
 	
-	func getWeatherForCity() {
+	func getWeatherForCityDeprecated() {
 		guard let userDefaultsService else {
 			return assertionFailure("Не инициализирован UserDefaults")
 		}
@@ -93,5 +93,53 @@ extension WeatherScreenPresenter: WeatherScreenPresentationLogic {
 				}
 			}
 		)
+	}
+	
+	func getWeatherForCity() {
+		Task { [weak self] in
+			guard let self else {return }
+			
+			do {
+				let serverModel = try await self.networkManager.getWeatherFor(
+					city: self.userDefaultsService.loadCity(),
+					language: self.userDefaultsService.loadLanguage()
+				)
+				
+				let city = WeatherViewModel(
+					city: serverModel.city.name
+				)
+				
+				var infoModels: [WeatherCellViewModel] = []
+				
+				serverModel.list.forEach { model in
+					if let description = model.weather.first?.description {
+						let infoModel = WeatherCellViewModel(
+							date: model.dtTxt,
+							temperature: "\(model.main.temp)",
+							description: description
+						)
+						
+						infoModels.append(infoModel)
+					} else {
+						let infoModel = WeatherCellViewModel(
+							date: model.dtTxt,
+							temperature: "\(model.main.temp)",
+							description: ""
+						)
+						
+						infoModels.append(infoModel)
+					}
+				}
+				
+				view?.updateView(city)
+				view?.display(models: infoModels)
+			} catch let error as NetworkError {
+				// Для вызова определенных методов
+				DTLogger.shared.log(.error, error.localizedDescription)
+			} catch {
+				// Для вызова общего метода неизвестной ошибки
+				DTLogger.shared.log(.error, error.localizedDescription)
+			}
+		}
 	}
 }

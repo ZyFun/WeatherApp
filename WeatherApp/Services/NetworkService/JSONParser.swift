@@ -26,4 +26,17 @@ final class JSONParser<Model: Codable>: IParser {
 		}
 		return model
 	}
+	
+	func parse(model: Model) -> Data {
+		var data: Data = Data()
+		
+		do {
+			let encoder = JSONEncoder()
+			encoder.keyEncodingStrategy = .convertToSnakeCase
+			data = try encoder.encode(model)
+		} catch {
+			DTLogger.shared.log(.error, error.localizedDescription)
+		}
+		return data
+	}
 }
